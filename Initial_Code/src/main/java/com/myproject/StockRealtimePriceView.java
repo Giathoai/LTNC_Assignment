@@ -14,14 +14,15 @@ public class StockRealtimePriceView implements StockViewer {
         // Kiểm tra giá cũ
         Double lastPrice = lastPrices.get(stockCode);
         if (lastPrice == null || Double.compare(lastPrice, newPrice) != 0) {
-            logPriceChange(stockCode, lastPrice, newPrice);
+            //logPriceChange(stockCode, lastPrice, newPrice);
+            Logger.logRealtime(stockCode, newPrice);
             lastPrices.put(stockCode, newPrice);
         }
     }
 
     private void logPriceChange(String stockCode, Double oldPrice, double newPrice) {
         if (oldPrice == null) {
-            System.out.printf("Stock %s initialized at price: %.2f%n", stockCode, newPrice);
+           Logger.logRealtime(stockCode, newPrice);
         } else {
             double change = newPrice - oldPrice;
             String direction = (change > 0) ? "↑ Increased" : "↓ Decreased";
